@@ -1,0 +1,10 @@
+- name: Install reaction.deb
+  apt:
+    deb: https://static.ppom.me/reaction/releases/v{{ reaction_version }}/reaction.deb
+
+- name: create a reaction.jsonnet based on your variable
+  template:
+    src: reaction.jsonnet.j2
+    dest: /etc/reaction.jsonnet
+  notify:
+    - Restart reaction
