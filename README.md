@@ -13,6 +13,9 @@ Role Variables
 --------------
 
 reaction_version: the version of reaction to install, default 1.1.2
+```bash
+reaction_version: 1.1.2
+```
 reaction_streams: a dictionary that define how to protect the server. "name", "command" and "regex" are mandatory. "retry", "retryperiod", "action" are optional because the have default value.
 
 ```bash
