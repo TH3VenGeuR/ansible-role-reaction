@@ -107,6 +107,7 @@ local banFor(time) = {
         },
       },
     },
+    {% if reaction_streams is defined %}
     {% for stream in reaction_streams %}
     {{ stream.name }}:
       cmd: {{ stream.command }},
@@ -119,7 +120,8 @@ local banFor(time) = {
         },
       },
     },
-    {% endfor %}  
+    {% endfor %}
+    {% endif %} 
   },
 }
 
