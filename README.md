@@ -21,7 +21,7 @@ reaction_streams: a dictionary that define how to protect the server. "name", "c
 ```bash
 reaction_streams:
   - name: nginx
-    command: ['tail','-n0','-f','/var/log/nginx/access.log'],
+    command: ['tail','-n0','-f','/var/log/nginx/access.log']
     regex: '^<ip> .* "POST /auth/login HTTP/..." 401 [0-9]+ .https://mydomain.com'
     retry: 3
     retryperiod: 1h
