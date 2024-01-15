@@ -107,21 +107,21 @@ local banFor(time) = {
         },
       },
     },
-    {% if reaction_streams is defined %}
-    {% for stream in reaction_streams %}
+{% if reaction_streams is defined %}
+{% for stream in reaction_streams %}
     {{ stream.name }}: {
       cmd: {{ stream.command }},
       filters: {
-        {{ stream.name }}-rules: {
+        {{ stream.name }}_rules: {
           regex: [@'{{ stream.regex }}'],
           retry: {{ stream.retry | default('3') }},
-          retryperiod: {{ stream.retryperiod | default('1h') }},
-          actions: {{ stream.actions | default('banFor('6h')') }},
+          retryperiod: {{ stream.retryperiod | default("'1h'") }},
+          actions: {{ stream.actions | default("banFor('6h')") }},
         },
       },
     },
-    {% endfor %}
-    {% endif %} 
+{% endfor %}
+{% endif %} 
   },
 }
 
