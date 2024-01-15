@@ -109,7 +109,7 @@ local banFor(time) = {
     },
     {% if reaction_streams is defined %}
     {% for stream in reaction_streams %}
-    {{ stream.name }}:
+    {{ stream.name }}: {
       cmd: {{ stream.command }},
       filters: {
         {{ stream.name }}-rules: {
