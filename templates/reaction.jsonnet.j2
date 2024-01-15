@@ -115,8 +115,8 @@ local banFor(time) = {
         {{ stream.name }}_rules: {
           regex: [@'{{ stream.regex }}'],
           retry: {{ stream.retry | default('3') }},
-          retryperiod: {{ stream.retryperiod | default("'1h'") }},
-          actions: {{ stream.actions | default("banFor('6h')") }},
+          retryperiod: {{ '"' + stream.retryperiod + '"' | default('\"6h\"') }},
+          actions: {{ stream.actions | default('banFor("6h")') }},
         },
       },
     },
