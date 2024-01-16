@@ -16,6 +16,12 @@ reaction_version: the version of reaction to install, default 1.1.2
 ```bash
 reaction_version: 1.1.2
 ```
+You can choose if you want to disable ssh protection with reaction_protect_ssh to false. Some distribution set a different name the ssh service, you can define it with variable reaction_ssh_servicename.
+
+```bash
+reaction_protect_ssh: true
+reaction_ssh_servicename: ssh
+```
 reaction_streams: a dictionary that define how to protect the server. "name", "command" and "regex" are mandatory. "retry", "retryperiod", "action" are optional because the have default value.
 
 ```bash
@@ -26,7 +32,9 @@ reaction_streams:
     retry: 3
     retryperiod: 1h
     actions: banFor('6h')
- 
+  - name: sshd
+    command: ['journalctl', '-n0', '-fu', 'ssh.service']
+    regex: 'authentication failure;.*rhost=<ip>' 
 ```
 
 Dependencies

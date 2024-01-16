@@ -61,10 +61,11 @@ local banFor(time) = {
   // their output will be used by one or more filters
   streams: {
     // streams have a user-defined name
+{% if reaction_protect_ssh is true %}
     ssh: {
       // note that if the command is not in environment's `PATH`
       // its full path must be given.
-      cmd: ['journalctl', '-n0', '-fu', 'sshd.service'],
+      cmd: ['journalctl', '-n0', '-fu', '{{ reaction_ssh_servicename }}.service'],
       // filters run actions when they match regexes on a stream
       filters: {
         // filters have a user-defined name
@@ -107,6 +108,8 @@ local banFor(time) = {
         },
       },
     },
+{% else %}
+{% endif %}
 {% if reaction_streams is defined %}
 {% for stream in reaction_streams %}
     {{ stream.name }}: {
@@ -115,7 +118,11 @@ local banFor(time) = {
         {{ stream.name }}_rules: {
           regex: [@'{{ stream.regex }}'],
           retry: {{ stream.retry | default('3') }},
-          retryperiod: {{ '"' + stream.retryperiod + '"' | default('\"6h\"') }},
+{% if stream.retryperiod is defined %}
+          retryperiod: {{ '"' + stream.retryperiod + '"' }},
+{% else %}
+          retryperiod: "1h",
+{% endif %}
           actions: {{ stream.actions | default('banFor("6h")') }},
         },
       },
