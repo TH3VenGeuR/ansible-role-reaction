@@ -37,8 +37,11 @@ reaction_streams:
     regex: 'authentication failure;.*rhost=<ip>' 
 ```
 
-Dependencies
+Compatibility
 ------------
+Role has been tested on : 
+- Debian 12
+- Rocky 8
 
 Example Playbook
 ----------------

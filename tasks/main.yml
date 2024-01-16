@@ -5,5 +5,5 @@
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Install reaction for other OS
-  import_tasks: debian.yml
+  import_tasks: all.yml
   when: ansible_facts['os_family'] != "Debian" 

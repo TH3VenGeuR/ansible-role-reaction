@@ -1,0 +1,33 @@
+- name: Download required direction binaries
+  get_url:
+    url: https://static.ppom.me/reaction/releases/v{{ reaction_version }}/{{ item }}
+    dest: /usr/bin/{{ item }}
+    mode: '0755'
+  with_items: 
+    - ip46tables
+    - reaction
+
+- name: create a reaction.jsonnet based on your variable
+  template:
+    src: reaction.jsonnet.j2
+    dest: /etc/reaction.jsonnet
+  notify:
+    - Restart reaction
+
+- name: create a reaction.service based on template
+  template:
+    src: reaction.service.j2
+    dest: /lib/systemd/system/reaction.service
+
+- name: symlink the reaction version
+  file:
+    src: /lib/systemd/system/reaction.service 
+    path: /etc/systemd/system/multi-user.target.wants/reaction.service
+    state: link
+  notify:
+    - Restart reaction
+
+- name: enable service
+  service:
+    name: reaction
+    enabled: yes
